@@ -1,0 +1,80 @@
+page-location{
+
+    ion-segment-button {
+        min-height: 40px;
+        line-height: 1.5rem !important;
+    
+        padding-left: 0px;
+        padding-right: 0px;
+      
+        text-align: center !important;
+        color: #6e6e6e  !important;
+        background: #cecece33 !important;
+        font-size: 1.3rem !important;
+        justify-content: center !important;
+
+        &.activated, &.segment-activated {
+            border-top: 0;
+            border-right: 0;
+            border-bottom: 2px solid #9dd82e!important;
+            border-left: 0;
+            color: #292929  !important;
+            background:#cecece33 !important;
+        }
+    }
+
+   
+    .icon {
+        padding-top: 5px;
+    }
+
+    .text {
+      margin-top: -5px !important;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    #map {
+        width: 100%;
+        height: 77%;
+      }
+      
+    .text-header{
+        font-size: 113%;
+        color: black;
+    }
+    
+    .text-addr{
+        font-size: 70%;
+        color: rgba(75, 73, 73, 0.89);
+        padding-bottom: 0%;
+        padding-top: 0%;
+        margin-top: 2%;
+        margin-bottom: 0%;
+    }
+
+    .locat-name{
+        font-size: 95% !important;
+        color : #120650 !important;
+    }
+    
+    .prov-name{
+        font-size: 82% !important;
+        color : #3b3b3b !important;
+    }
+
+    .dist{
+        font-size: 75% !important;
+        color : #686e6ee0 !important;
+    }
+    
+    .pin{
+        width: 40px;
+        height: 40px;
+    }
+
+    .navigate{
+        font-size: 170%;
+    }
+
+}

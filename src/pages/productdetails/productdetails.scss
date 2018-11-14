@@ -1,0 +1,95 @@
+page-productdetails {    
+
+    ion-content {
+        // background-image: url('../assets/imgs/bg-full.png');
+        background-size: cover;
+        background-image: url('../assets/imgs/bg_blue.jpg');
+      }
+      .card-header{
+        //background-color: map-get($colors, primary);
+        background-color:rgba(165, 189, 209, 0.192);
+        color: #000000;
+        height: 60px;
+        padding: 0px;
+        vertical-align: middle;
+        // display: flex !important;
+        // justify-content: left !important;
+        // align-content: center !important;
+        // align-items: center !important;
+    }
+
+    .text{
+        background-color:transparent;
+        color: #000000;
+        height: 60px;
+        padding-left: 10px;
+        vertical-align: middle;
+        font-size: 90%;
+    } 
+
+    .icon-map{
+        // color: #868686;
+        width: 25px;
+        height: 25px;
+    }
+
+    .card-content {
+        padding: 0px 10px;
+        overflow: scroll;
+    }
+
+    .locat-name{
+        font-size: 83% !important;
+        color : #020107 !important;
+      }
+    
+      .prov-name{
+        font-size: 82% !important;
+        color : #3b3b3b !important;
+      }
+
+      .dist{
+        font-size: 80% !important;
+        color : #096357e0 !important;
+      }
+    
+      .icon-color{
+          color: #0839798c;
+      }
+    
+      .price{
+        font-size: 120% !important;
+          color : #5c44c7 !important;
+      }
+      .unit-name{
+        font-size: 65% !important;
+        color : #725dcf !important;
+      }
+    
+      .update{
+        font-size: 50% !important;
+        color : #363535 !important;
+      }
+
+      .ref{
+        font-size: 75% !important;
+        color : #000000 !important;
+      }
+
+      #notification-button {            
+        position: relative;
+        width: 42px;
+        top:1px;
+        right: 1px;
+        overflow: visible!important;
+    }
+
+
+#notifications-badge {
+        background-color: red;
+        position: absolute;
+        top: -3px;
+        right: -3px;
+        border-radius: 100%;
+    }
+}

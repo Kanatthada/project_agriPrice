@@ -1,0 +1,79 @@
+<!--
+  Generated template for the ProductdetailsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{typeName}}</ion-title> 
+    <ion-buttons end>
+      <button ion-button clear (click)="openPopover($event)">
+        <ion-icon name="md-funnel"></ion-icon>
+      </button>
+    </ion-buttons>
+   
+  </ion-navbar>
+</ion-header>
+ 
+<ion-content>
+
+  <!-- <div *ngFor="let data of arr_data">
+    <ion-card *ngIf="type.type_id==data.subtype_type_id">
+        <div *ngIf="data.subtype_id!=data.subtype_type_id;else other_content">
+        <p text-center>{{data.subtype_name}}</p>
+        {{data.location_name}}
+        </div>
+        <ng-template #other_content>{{data.location_name}}</ng-template>
+      </ion-card>
+  </div> 
+     -->
+
+  <!-- <accordion *ngFor="let item of arr_subtype" [title]="item.subtype_name">
+    <ion-list *ngFor="let data of arr_data" text-wrap>
+      <ion-item *ngIf="item.subtype_id==data.subtype_id" class="icon-color">
+        <ion-icon name="pin" item-start class="icon-color"></ion-icon>
+        <div>
+          <p class="locat-name">{{ data.location_name }}</p>
+          <p class="prov-name">จ.{{ data.province_name }}</p>
+        </div>
+        <div item-right> 
+          <p class="price">{{ data.product_price | number }} <a class="unit-name">{{ data.unit_name }}</a></p>
+          <p class="update" text-right>(อัปเดตล่าสุด : {{ data.lastUpdate | thaiDate:'short' }})</p>
+        </div>
+      </ion-item>
+    </ion-list>
+    <ion-label class="ref">แหล่งที่มา : <ion-icon name="pin" class="icon-color"></ion-icon> รักบ้านเกิด</ion-label>
+  </accordion> -->
+
+  <ion-card *ngFor="let item of arr_subtype">
+    <ion-card-header>
+        <ion-item class="text" text-wrap>
+          {{ item.subtype_name }} 
+          <!-- <button ion-button clear item-right>
+            <img class="icon-map" src="../assets/imgs/icon-mapLo.png">
+          </button>         -->
+        </ion-item> 
+    </ion-card-header>  
+    <ion-card-content>
+      <ion-list *ngFor="let data of arr_data" text-wrap>
+        <ion-item *ngIf="item.subtype_id==data.subtype_id" class="icon-color">
+          <ion-icon name="pin" item-start class="icon-color"></ion-icon>
+          <div>
+            <p class="locat-name">{{ data.location_name }}</p>
+            <p class="prov-name">จ.{{ data.province_name }}</p>
+           
+          </div> 
+          <div item-right> 
+            <p class="price">{{ data.product_price | number }} <a class="unit-name">{{ data.unit_name }}</a></p>
+            <p class="update" text-right>(อัปเดตล่าสุด : {{ data.lastUpdate | thaiDate:'short' }})</p>
+          </div> 
+          <ion-icon class="dist" ios="ios-car" *ngIf="data.distance!=0"> <a class="dist" >ระยะทาง {{ data.distance }} กม.</a></ion-icon>
+          <!-- <ion-icon class="dist" ios="ios-car" *ngIf="data.distance==0"> <a class="dist" >ระยะทาง - กม.</a></ion-icon> -->
+        </ion-item>
+      </ion-list>
+      <ion-label *ngIf="arr_data!=null" class="ref">แหล่งที่มา : <ion-icon name="pin" class="icon-color"></ion-icon> รักบ้านเกิด</ion-label>
+    </ion-card-content>
+  </ion-card>
+ 
+</ion-content>

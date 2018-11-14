@@ -1,0 +1,26 @@
+page-home {
+    ion-content {
+        // background-image: url('../assets/imgs/bg.png');
+        background-size: cover;
+        background-image: url('../assets/imgs/bg_sky.jpg');
+    }
+    .bgCard{
+        background:rgba(255, 255, 255, 0.8);
+    }
+    .bg{
+        background:rgba(255, 255, 255, 0.4);
+    }
+    ion-card-header, ion-card-content{
+        text-align: center;
+    }
+    ion-icon{
+        color: #868686;
+    }
+    .image{
+        width: 15%;
+        height: 15%;
+    }
+    .text{
+        margin: 2%;
+    }
+}

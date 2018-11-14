@@ -1,0 +1,46 @@
+<!-- Generated template for the PopoverMapComponent component -->
+<ion-list radio-group [(ngModel)]="selectItem">
+  <ion-item-divider color="light" class="text-head">ค้นหาตำแหน่งสถานที่รับซื้อ:</ion-item-divider>
+  <ion-item>
+    <ion-label class="text-content">ใกล้เคียง</ion-label>
+    <ion-radio checked="true" value="near"></ion-radio>
+  </ion-item>
+  <ion-item>
+    <ion-label class="text-content">ทั้งหมด</ion-label>
+    <ion-radio checked="true" value="all"></ion-radio>
+  </ion-item>
+  <ion-item>
+    <ion-label class="text-content">ตลาดข้าว</ion-label>
+    <ion-radio checked="true" value="rice"></ion-radio>
+  </ion-item>
+  <ion-item>
+    <ion-label class="text-content">ตลาดดอกไม้</ion-label>
+    <ion-radio checked="true" value="flower"></ion-radio>
+  </ion-item>
+  <ion-item>
+    <ion-label class="text-content">ตลาดปศุสัตว์</ion-label>
+    <ion-radio checked="true" value="livestock"></ion-radio>
+  </ion-item>
+  <ion-item>
+    <ion-label class="text-content">ตลาดผลไม้</ion-label>
+    <ion-radio checked="true" value="fruit"></ion-radio>
+  </ion-item>
+  <ion-item>
+    <ion-label class="text-content">ตลาดผัก</ion-label>
+    <ion-radio checked="true" value="vegetable"></ion-radio>
+  </ion-item>
+  <ion-item>
+    <ion-label class="text-content">ตลาดพืชเศรษฐกิจ</ion-label>
+    <ion-radio checked="true" value="agri"></ion-radio>
+  </ion-item>
+  <ion-item>
+    <ion-label class="text-content">ตลาดสัตว์น้ำ</ion-label>
+    <ion-radio checked="true" value="aquatic"></ion-radio>
+  </ion-item>
+</ion-list>
+
+
+<div text-center>
+  <button ion-button (click)="close()" color="light" class="btn">ยกเลิก</button>
+  <button ion-button (click)="showData()" class="btn">ตกลง</button>
+</div>

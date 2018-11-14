@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      ค้นหาข้อมูลย้อนหลัง
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="bg">
+  <ion-card no-padding>
+    <ion-item class="select">
+      <ion-label>สินค้าหลัก</ion-label>
+      <ion-select [(ngModel)]="type" placeholder="เลือกสินค้าหลัก" okText="ตกลง" cancelText="ยกเลิก">
+        <ion-option *ngFor="let data of arr_type" (ionSelect)="sendData(data.type_id)">{{ data.type_name }}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item class="select">
+      <ion-label>สินค้าย่อย</ion-label>
+      <ion-select [(ngModel)]="subtype" placeholder="เลือกสินค้าย่อย" okText="ตกลง" cancelText="ยกเลิก">
+        <ion-option *ngFor="let data of arr_subtype" value="{{data.subtype_id}}">{{ data.subtype_name }}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-card>
+  <!-- <ion-item>
+      <ion-label>จากวันที่</ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY" min="2017" [(ngModel)]="fromDate"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+      <ion-label>ถึงวันที่</ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY" min="2017" [(ngModel)]="toDate"></ion-datetime>
+  </ion-item> -->
+  
+  <ion-card>
+    <ion-item>
+      <span class="text" item-start> ช่วงวันที่ </span>
+      <span class="date" item-end>{{ date }}</span>
+   </ion-item>
+   
+    <ion-calendar padding [(ngModel)]="dateRange" [options]="optionsRange" [type]="type" [format]="'YYYY-MM-DD'" (onChange)="onChange()">
+    </ion-calendar>
+  </ion-card>
+
+  <button ion-button round (click)="searchData()" class="center">
+    <ion-icon name="search"></ion-icon> 
+    <ion-label> ค้นหา </ion-label>
+  </button>
+
+</ion-content>

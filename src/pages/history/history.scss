@@ -1,0 +1,59 @@
+page-history {
+    .bg {
+        background: #d7dff5fa;
+    }
+ 
+    .underline{
+        text-decoration: underline;
+    }
+
+    .text{
+        font-size: 80%;
+    }
+
+    .ref{
+        font-size: 60%;
+        text-align: right;
+    }
+
+    .graph{
+        height: 400; 
+        width: 500;
+        font-family: 'Prompt', sans-serif;
+    }
+
+    .thead{
+        background: #b7f3f76b;
+        font-size: 90%;
+    }
+
+    .date{
+        font-size: 11px;
+        padding: 0%;
+    }
+
+    .location{
+        font-size: 12px;
+        padding-right: 0%;
+    }
+
+    .province{
+        font-size: 11px;
+        color: rgb(94, 94, 94);
+    }
+
+    .price{
+        font-size: 15px;
+        color: #48196ef6;;
+    }
+
+    .unit{
+        font-size: 11px;
+        color: rgb(94, 94, 94);
+    }
+
+    .icon-pin{
+        color: #0839798c;
+    }
+
+}

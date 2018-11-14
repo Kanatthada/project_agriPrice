@@ -1,0 +1,80 @@
+<!--
+  Generated template for the HistoryPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>ราคาสินค้าเกษตรย้อนหลัง</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content no-padding class="bg">
+  <ion-card no-padding>
+    <ion-item>
+      <div class="underline">
+        <ion-icon name="search"></ion-icon> ผลการค้นหา
+      </div>
+      <div class="text"> สินค้าหลัก : {{ type }} </div>
+      <div class="text" text-wrap> สินค้าย่อย : {{ subtype }} </div>
+      <div class="text"> ช่วงวันที่ : {{ fromDate | thaiDate:'medium' }} - {{ toDate | thaiDate:'medium' }} </div>
+    </ion-item>
+  </ion-card>
+
+  <ion-card>
+    <ion-segment [(ngModel)]="history">
+      <ion-segment-button value="graph">
+        กราฟ
+      </ion-segment-button>
+      <ion-segment-button value="table">
+        ตาราง
+      </ion-segment-button>
+    </ion-segment>
+
+    <div [ngSwitch]="history" padding>
+      <div [style.display]="history == 'graph' ? 'block' : 'none'">
+        <ion-label text-center>
+          กราฟแสดงข้อมูลราคาสินค้าเกษตรย้อนหลัง
+        </ion-label>
+        <canvas id="lineCanvas" #lineCanvas height="auto" width="500"></canvas>
+        <ion-item class="ref" text-wrap>
+          (ข้อมูลนี้เป็นราคา{{ subtype }}ที่มาจากเว็บไซต์รักบ้านเกิด)
+        </ion-item>
+
+      </div>
+
+      <div [style.display]="history == 'table' ? 'block' : 'none'">
+        <ion-label text-center>
+          ตารางแสดงข้อมูลราคาสินค้าเกษตรย้อนหลัง
+        </ion-label>
+        <ion-list no-padding>
+          <ion-item class="thead" text-center>
+            <ion-label col-3> วันที่ </ion-label>
+            <ion-label col-5> สถานที่รับซื้อ </ion-label>
+            <ion-label col-4> ราคา </ion-label>
+          </ion-item>
+        </ion-list>
+        <div *ngIf="sortedByDate!=null">
+          <ion-list *ngFor="let data of sortedByDate" text-wrap>
+            <ion-item >
+              <ion-label col-3 class="date" text-center> {{ data.date | thaiDate:'short' }} </ion-label>
+              <ion-label col-5 class="location"> <ion-icon name="pin" item-start class="icon-pin"></ion-icon>{{ data.location_name }}
+                <a class="province">จ.{{ data.province_name }}</a>
+              </ion-label>
+              <ion-label col-4 class="price" text-center> {{ data.product_price | number }}
+                <p class="unit" text-center>{{ data.unit_name }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+          <ion-label *ngIf="arr_data!=null" class="text">แหล่งที่มา : <ion-icon name="pin" class="icon-pin"></ion-icon> รักบ้านเกิด</ion-label>
+        </div>
+
+      </div>
+    </div>
+  </ion-card>
+
+
+
+</ion-content>

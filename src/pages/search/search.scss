@@ -1,0 +1,29 @@
+page-search {
+    .bg {
+       // background-image: url('../assets/imgs/bg_gray.jpg');
+       // background-size: cover;
+       background: #d7dff5fa;
+    }
+
+    .center{
+        margin-left: auto;
+        margin-right: auto;
+        display: block !important;
+    }
+
+    .select{
+        font-size: 105%;
+        color: #000000;
+    }
+
+    .text{
+        font-size: 90%;
+        color: #000000;
+    }
+
+    .date{
+        font-size: 70%;
+        color: #000000;
+    }
+
+}

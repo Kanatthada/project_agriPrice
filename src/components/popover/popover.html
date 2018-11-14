@@ -1,0 +1,30 @@
+<!-- Generated template for the PopoverComponent component -->
+
+<ion-list radio-group [(ngModel)]="selectItem">
+  <ion-item-divider color="light" class="text-head">จัดเรียงข้อมูลตาม:</ion-item-divider>
+  <ion-item>
+    <ion-label class="text-content">วันที่อัปเดตล่าสุด</ion-label>
+    <ion-radio value="date"></ion-radio>
+  </ion-item>
+  <ion-item>
+    <ion-label class="text-content">ระยะทาง <ion-icon name="md-arrow-round-up"></ion-icon></ion-label>
+    <ion-radio checked="true" value="neardistance"></ion-radio>
+  </ion-item>
+  <ion-item>
+    <ion-label class="text-content">ระยะทาง <ion-icon name="md-arrow-round-down"></ion-icon> </ion-label>
+    <ion-radio checked="true" value="fardistance"></ion-radio>
+  </ion-item>
+  <ion-item>
+    <ion-label class="text-content">ราคา <ion-icon name="md-arrow-round-up"></ion-icon></ion-label>
+    <ion-radio value="lowprice"></ion-radio>
+  </ion-item>
+  <ion-item>
+    <ion-label class="text-content">ราคา <ion-icon name="md-arrow-round-down"></ion-icon></ion-label>
+    <ion-radio value="highprice"></ion-radio>
+  </ion-item>
+</ion-list>
+
+<div text-center>
+  <button ion-button (click)="close()" color="light" class="btn">ยกเลิก</button>
+  <button ion-button (click)="sort()" class="btn">ตกลง</button>
+</div>
