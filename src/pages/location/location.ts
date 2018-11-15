@@ -29,10 +29,11 @@ export class LocationPage {
   dataTemp: any[] = [];
   address: string;
 
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController, public viewCtrl: ViewController, public geolocation: Geolocation, public datas: ProductdataProvider, public platform: Platform) {
     this.isAndroid = platform.is('android');
 
-
+    this.loadNearbyLocation();
   }
 
   ionViewDidLoad() {
@@ -42,20 +43,17 @@ export class LocationPage {
     // this.arr_data = this.getNearest();
     // console.log(this.arr_data);
 
-    // this.loadmap();
+    this.loadmap();
   }
 
   doRefresh(refresher) {
     this.getLatLng();
-
-    //this.loadPoints();
+    this.map.off();
+    this.map.remove();
+    this.loadmap();
     refresher.complete();
   }
 
-  ngOnInit() {
-    this.loadNearbyLocation();
-    this.loadmap();
-  }
 
   getLatLng() {
     let options = { timeout: 10000, enableHighAccuracy: true, maximumAge: 3600 };
@@ -102,60 +100,37 @@ export class LocationPage {
         this.select = selectItem
       }
       this.dataTemp = this.arr_data;
+      this.map.off();
+      this.map.remove();
+      this.loadmap();
       return this.arr_data, this.select;
     });
 
   }
 
-  getNearest() {
-    let data: any = this.loadNearbyLocation();
-    // let data = [];
+  getNearest(data) {
+    console.log(data);
+    let distance = [];
+    let temp = [];
     for (let i in data) {
-      if (data[i].distance <= 30) {
-        data[i];
+      distance[i] = parseFloat(data[i].distance);
+
+      if (distance[i] <= 30) {
+        temp[i] = data[i];
       }
     }
     if (data.length == 0) {
       for (let i = 0; i < 5; i++) {
-        data[i];
+        temp[i] = data[i];
       }
     }
-    // arr.then(value => {
-    //   console.log(value);
-    //   for (let i in value) {
-    //     if (value[i].distance <= 30) {
-    //       data[i] = value[i];
-    //     }
-    //   }
-    //   if (data.length == 0) {
-    //     for (let i = 0; i < 5; i++) {
-    //       data[i] = value[i];
-    //     }
-    //   }
-    // });
-
-    return data;
-  }
-
-  // getSortLocation() {
-  //   var data = this.loadNearbyLocation();
-  //   let arr: any = [];
-  //   data.then(value => {
-  //     console.log(value);
-  //     for (let i in value) {
-  //       arr[i] = value[i];
-  //     }
-  //   });
-  //   //console.log(this.arr_data);
-  //   return arr;
-  // }
-
-  getData(data){
-    this.arr_data = data;
+    console.log(temp);
+    this.arr_data = temp;
     this.loadPoints();
     return this.arr_data;
   }
-  
+
+
   loadNearbyLocation() {
     this.datas.get_location().subscribe((response) => {
       this.geolocation.getCurrentPosition().then(result => {
@@ -169,7 +144,8 @@ export class LocationPage {
         this.place = this.arr_data.sort((locationA: any, locationB: any) => {
           return locationA.distance - locationB.distance;
         });
-        this.getData(this.arr_data);
+        let near: any = this.getNearest(this.arr_data);
+        this.arr_data = near;
         console.log(this.arr_data);
         return this.arr_data;
       });
@@ -242,7 +218,7 @@ export class LocationPage {
     // load a tile layer
     L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attributions: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
-      // maxZoom: 18
+      maxZoom: 18
     }).addTo(this.map);
     this.map.attributionControl.setPrefix('<a href="https://leafletjs.com/">Leaflet</a> | Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors');
     this.map.locate({
@@ -253,7 +229,7 @@ export class LocationPage {
       let markerGroup = L.featureGroup();
       let marker: any = L.marker([e.latitude, e.longitude]).on('click', () => {
         console.log(e.latitude + ", " + e.longitude);
-        alert('Marker clicked');
+        alert(this.address);
       });
       markerGroup.addLayer(marker);
       this.map.addLayer(markerGroup);
@@ -263,12 +239,13 @@ export class LocationPage {
     this.loadPoints();
   }
 
+
   loadPoints() {
-    let temp: any  = this.arr_data;
+
     let markerGroup = L.featureGroup();
     var myIcon: any;
 
-    console.log(temp);
+    console.log(this.arr_data);
     for (let i = 0; i < this.arr_data.length; i++) {
       if (this.arr_data[i].category_name == "ตลาดข้าว") {
         myIcon = L.icon({
@@ -378,17 +355,6 @@ export class LocationPage {
 
 
 }
-
-// interface Data{
-//   category_name: string;
-//   coord_id: number;
-//   coord_latitude: number;
-//   coord_longitude: number;
-//   distance: any;
-//   location_name: string;
-//   province_name: string;
-//   type_name: string;
-// }
 
 
 
