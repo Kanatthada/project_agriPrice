@@ -8,12 +8,12 @@
         <ion-icon name="md-options"></ion-icon>
       </button>
     </ion-buttons>
-  </ion-navbar>  
+  </ion-navbar>
   <ion-segment [(ngModel)]="location" mode="md" icon-left>
     <ion-segment-button value="pin">
       <ion-icon name="ios-map"></ion-icon>
-     แผนที่
-    </ion-segment-button> 
+      แผนที่
+    </ion-segment-button>
     <ion-segment-button value="list">
       <ion-icon name="ios-list"></ion-icon>
       <span> รายละเอียด </span>
@@ -24,14 +24,11 @@
 
 <ion-content>
   <ion-refresher (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content
-      pullingIcon="arrow-dropdown"
-      pullingText="Pull to refresh"
-      refreshingSpinner="circles"
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
       refreshingText="Refreshing...">
     </ion-refresher-content>
   </ion-refresher>
-  
+
   <div [ngSwitch]="location" no-padding>
     <div [style.display]="location == 'pin' ? 'block' : 'none'">
       <ion-card>
@@ -43,7 +40,7 @@
     </div>
 
     <div *ngSwitchCase="'list'">
-      <ion-searchbar (ionInput)="searchItem($event)"  placeholder="ค้นหาด้วยชื่อสถานที่หรือชื่อจังหวัด" clearInput>
+      <ion-searchbar (ionInput)="searchItem($event)" placeholder="ค้นหาด้วยชื่อสถานที่หรือชื่อจังหวัด" clearInput>
       </ion-searchbar>
       <ion-list>
         <ion-item *ngFor="let data of arr_data" text-wrap>

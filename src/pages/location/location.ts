@@ -25,11 +25,9 @@ export class LocationPage {
   longitude: number;
 
   place: any[];
-  public arr_data: Data[];
+  public arr_data: any[] = [];
   dataTemp: any[] = [];
   address: string;
-
- 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController, public viewCtrl: ViewController, public geolocation: Geolocation, public datas: ProductdataProvider, public platform: Platform) {
     this.isAndroid = platform.is('android');
@@ -40,20 +38,24 @@ export class LocationPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad LocationPage');
     this.getLatLng();
-    this.arr_data = this.getNearest();
-    console.log(this.arr_data);
-    this.loadmap();
+
+    // this.arr_data = this.getNearest();
+    // console.log(this.arr_data);
+
+    // this.loadmap();
   }
 
-  doRefresh(refresher){
+  doRefresh(refresher) {
     this.getLatLng();
-    this.loadmap();
+
+    //this.loadPoints();
     refresher.complete();
   }
 
-  // ionViewDidEnter() {
-  //   this.loadmap();
-  //   }
+  ngOnInit() {
+    this.loadNearbyLocation();
+    this.loadmap();
+  }
 
   getLatLng() {
     let options = { timeout: 10000, enableHighAccuracy: true, maximumAge: 3600 };
@@ -87,8 +89,7 @@ export class LocationPage {
 
   //Show popover menu
   openPopover(event) {
-    let allData = this.getSortLocation();
-    let popover = this.popoverCtrl.create(PopoverMapComponent, { arrData: allData, selectItem: this.select });
+    let popover = this.popoverCtrl.create(PopoverMapComponent, { arrData: this.place, selectItem: this.select });
     popover.present({
       ev: event
     });
@@ -102,64 +103,75 @@ export class LocationPage {
       }
       this.dataTemp = this.arr_data;
       return this.arr_data, this.select;
-
     });
 
   }
 
   getNearest() {
-    var arr = this.loadNearbyLocation();
-    let data = [];
-    arr.then(value => {
-      console.log(value);
-      for (let i in value) {
-        if (value[i].distance <= 30) {
-          data[i] = value[i];
-        }
+    let data: any = this.loadNearbyLocation();
+    // let data = [];
+    for (let i in data) {
+      if (data[i].distance <= 30) {
+        data[i];
       }
-      if (data.length == 0) {
-        for (let i = 0; i < 5; i++) {
-          data[i] = value[i];
-        }
+    }
+    if (data.length == 0) {
+      for (let i = 0; i < 5; i++) {
+        data[i];
       }
-    });
+    }
+    // arr.then(value => {
+    //   console.log(value);
+    //   for (let i in value) {
+    //     if (value[i].distance <= 30) {
+    //       data[i] = value[i];
+    //     }
+    //   }
+    //   if (data.length == 0) {
+    //     for (let i = 0; i < 5; i++) {
+    //       data[i] = value[i];
+    //     }
+    //   }
+    // });
+
     return data;
   }
 
-  getSortLocation() {
-    var data = this.loadNearbyLocation();
-    let arr: any = [];
-    data.then(value => {
-      console.log(value);
-      for (let i in value) {
-        arr[i] = value[i];
-      }
-    });
-    //console.log(this.arr_data);
-    return arr;
+  // getSortLocation() {
+  //   var data = this.loadNearbyLocation();
+  //   let arr: any = [];
+  //   data.then(value => {
+  //     console.log(value);
+  //     for (let i in value) {
+  //       arr[i] = value[i];
+  //     }
+  //   });
+  //   //console.log(this.arr_data);
+  //   return arr;
+  // }
+
+  getData(data){
+    this.arr_data = data;
+    this.loadPoints();
+    return this.arr_data;
   }
-
+  
   loadNearbyLocation() {
-    if (this.place) {
-      return Promise.resolve(this.place);
-    }
-    return new Promise(resolve => {
-      this.datas.get_location().subscribe((data) => {
-        this.geolocation.getCurrentPosition().then(result => {
-          this.latitude = result.coords.latitude;
-          this.longitude = result.coords.longitude;
-
-          // console.log(data);
-          console.log(this.latitude + ", " + this.longitude);
-
-          this.place = this.applyHaversine(data, this.latitude, this.longitude);
-
-          this.place.sort((locationA: any, locationB: any) => {
-            return locationA.distance - locationB.distance;
-          });
-
-          resolve(this.place);
+    this.datas.get_location().subscribe((response) => {
+      this.geolocation.getCurrentPosition().then(result => {
+        this.latitude = result.coords.latitude;
+        this.longitude = result.coords.longitude;
+        console.log(this.latitude + ", " + this.longitude);
+        this.arr_data = this.applyHaversine(response, this.latitude, this.longitude);
+        this.arr_data = this.arr_data.sort((locationA: any, locationB: any) => {
+          return locationA.distance - locationB.distance;
         });
+        this.place = this.arr_data.sort((locationA: any, locationB: any) => {
+          return locationA.distance - locationB.distance;
+        });
+        this.getData(this.arr_data);
+        console.log(this.arr_data);
+        return this.arr_data;
       });
     });
   }
@@ -252,9 +264,11 @@ export class LocationPage {
   }
 
   loadPoints() {
+    let temp: any  = this.arr_data;
     let markerGroup = L.featureGroup();
     var myIcon: any;
-    console.log(this.arr_data.length);
+
+    console.log(temp);
     for (let i = 0; i < this.arr_data.length; i++) {
       if (this.arr_data[i].category_name == "ตลาดข้าว") {
         myIcon = L.icon({
@@ -321,21 +335,21 @@ export class LocationPage {
 
   }
 
-  setItem(){
-   this.arr_data = this.dataTemp;
+  setItem() {
+    this.arr_data = this.dataTemp;
   }
 
   searchItem(ev: any) {
     console.log(ev);
     // Reset items back to all of the items
-    this.setItem(); 
+    this.setItem();
 
     // set val to the value of the searchbar
     const val = ev.target.value;
 
     // if the value is an empty string don't filter the items
     if (val && val.trim() != '') {
-      this.arr_data = this.arr_data.filter(function(item:any) {
+      this.arr_data = this.arr_data.filter(function (item: any) {
         return item.location_name.includes(val) || item.province_name.includes(val)
       });
       // this.arr_data = this.arr_data.filter((item) => {
@@ -365,16 +379,16 @@ export class LocationPage {
 
 }
 
-interface Data{
-  category_name: string;
-  coord_id: number;
-  coord_latitude: number;
-  coord_longitude: number;
-  distance: any;
-  location_name: string;
-  province_name: string;
-  type_name: string;
-}
+// interface Data{
+//   category_name: string;
+//   coord_id: number;
+//   coord_latitude: number;
+//   coord_longitude: number;
+//   distance: any;
+//   location_name: string;
+//   province_name: string;
+//   type_name: string;
+// }
 
 
 
