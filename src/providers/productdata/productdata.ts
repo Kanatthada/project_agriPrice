@@ -11,7 +11,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class ProductdataProvider {
 
-  host = "http://172.18.23.9:8080";
+  host = "http://192.168.43.6:8080";
   constructor(public http: Http) {
     console.log('Hello ProductdataProvider Provider');
   }
