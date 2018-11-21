@@ -246,50 +246,72 @@ export class LocationPage {
     var myIcon: any;
 
     console.log(this.arr_data);
+    let arr_data = Array();
     for (let i = 0; i < this.arr_data.length; i++) {
-      if (this.arr_data[i].category_name == "ตลาดข้าว") {
+      let check: boolean = false;
+      let temp;
+      for (let j = 0; j < arr_data.length; j++) {
+        if (this.arr_data[i].location_name == arr_data[j].location_name) {
+          check = true;
+          temp = this.arr_data[i];
+        }
+      }
+      if (check == false) {
+        arr_data.push(this.arr_data[i]);
+      } else if (check == true) {
+        for (let j = 0; j < arr_data.length; j++) {
+          if (temp.location_name == arr_data[j].location_name) {
+            arr_data[j].category_name = arr_data[j].category_name + temp.category_name;
+            console.log(arr_data[j].category_name);
+          }
+        }
+      }
+    }
+    console.log(arr_data);
+    for (let i = 0; i < arr_data.length; i++) {
+      if (arr_data[i].category_name == "ตลาดข้าว") {
         myIcon = L.icon({
           iconUrl: 'assets/imgs/pin_rice.png',
           iconSize: [37, 37],
           iconAnchor: [9, 21],
           popupAnchor: [0, -14]
         });
-      } else if (this.arr_data[i].category_name == "ตลาดดอกไม้") {
+      } else if (arr_data[i].category_name == "ตลาดดอกไม้") {
         myIcon = L.icon({
           iconUrl: 'assets/imgs/pin_flower.png',
           iconSize: [37, 37],
           iconAnchor: [9, 21],
           popupAnchor: [0, -14]
         });
-      } else if (this.arr_data[i].category_name == "ตลาดปศุสัตว์") {
+      } else if (arr_data[i].category_name == "ตลาดปศุสัตว์") {
         myIcon = L.icon({
           iconUrl: 'assets/imgs/pin_livestock.png',
           iconSize: [37, 37],
           iconAnchor: [9, 21],
           popupAnchor: [0, -14]
         });
-      } else if (this.arr_data[i].category_name == "ตลาดผลไม้") {
+      } else if (arr_data[i].category_name == "ตลาดผลไม้") {
         myIcon = L.icon({
           iconUrl: 'assets/imgs/pin_fruit.png',
           iconSize: [37, 37],
           iconAnchor: [9, 21],
           popupAnchor: [0, -14]
         });
-      } else if (this.arr_data[i].category_name == "ตลาดผัก") {
+      } else if (arr_data[i].category_name == "ตลาดผัก") {
         myIcon = L.icon({
           iconUrl: 'assets/imgs/pin_vegetable.png',
           iconSize: [37, 37],
           iconAnchor: [9, 21],
           popupAnchor: [0, -14]
         });
-      } else if (this.arr_data[i].category_name == "ตลาดพืชเศรษฐกิจ") {
+      } else if (arr_data[i].category_name == "ตลาดพืชเศรษฐกิจ") {
         myIcon = L.icon({
           iconUrl: 'assets/imgs/pin_agri.png',
           iconSize: [37, 37],
           iconAnchor: [9, 21],
           popupAnchor: [0, -14]
         });
-      } else if (this.arr_data[i].category_name == "ตลาดสัตว์น้ำ") {
+      } else if (arr_data[i].category_name == "ตลาดสัตว์น้ำ") {
         myIcon = L.icon({
           iconUrl: 'assets/imgs/pin_aquatic.png',
           iconSize: [37, 37],
@@ -297,6 +319,7 @@ export class LocationPage {
           popupAnchor: [0, -14]
         });
       } else {
+        console.log(arr_data[i]);
         myIcon = L.icon({
           iconUrl: 'assets/imgs/icon_market.png',
           iconSize: [37, 37],
@@ -304,8 +327,8 @@ export class LocationPage {
           popupAnchor: [0, -14]
         });
       }
-      var popup = this.arr_data[i].location_name;
-      var marker = L.marker([this.arr_data[i].coord_latitude, this.arr_data[i].coord_longitude], { icon: myIcon }).bindPopup(popup);
+      var popup = arr_data[i].location_name;
+      var marker = L.marker([arr_data[i].coord_latitude, arr_data[i].coord_longitude], { icon: myIcon }).bindPopup(popup);
       markerGroup.addLayer(marker);
       this.map.addLayer(markerGroup);
     }
