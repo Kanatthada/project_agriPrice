@@ -1,5 +1,4 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-//import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { NavController, NavParams, Platform } from 'ionic-angular';
 import { ProductdataProvider } from '../../providers/productdata/productdata';
 import chartJs from 'chart.js';
@@ -12,7 +11,6 @@ import * as moment from 'moment';
  * Ionic pages and navigation.
  */
 
-//@IonicPage()
 @Component({
   selector: 'page-history',
   templateUrl: 'history.html',
@@ -53,18 +51,18 @@ export class HistoryPage {
         this.type = response[0].type_name;
         this.subtype = response[0].subtype_name;
         this.arr_data = response;
-        console.log(this.arr_data);
+        // console.log(this.arr_data);
 
         this.getLineChart(response);
 
         this.sortedByDate = this.sortArr(response, 'date');
-      } else if (response.length == 0) { 
+      } else if (response.length == 0) {
         this.datas.get_subtype(this.typeId).subscribe((response) => {
           this.type = response[0].subtype_name;
           this.subtype = response[0].subtype_name;
           this.dataNull = "ไม่พบข้อมูล" + response[0].subtype_name + " ในช่วงวันที่ต้องการค้นหา";
         });
-     }
+      }
     });
 
     this.dateDifference();
@@ -129,11 +127,7 @@ export class HistoryPage {
     let next_date: any;
     let rangeDate: number;
     let changeDate: Date;
-    let p: any;
-
-    //  let test = new Date('2018-10-03');
-    //   test = this.changeFormatDate(test);
-    //   console.log("test = "+ test);
+    //let p: any;
 
     rangeDate = this.dateDifference();
     d = new Date(this.fromDate);
@@ -149,12 +143,10 @@ export class HistoryPage {
       days.push(next_date);
     }
     console.log(days);
-
-
     for (let item in response) {
       if (ln != response[item].location_name) {
-        // console.log(buffer.length)
 
+        // console.log(buffer.length)
         if (buffer.length != 0) {
           price.push(buffer);
           buffer = [];
@@ -163,36 +155,52 @@ export class HistoryPage {
         ln = response[item].location_name;
         location.push(ln);
 
-        changeDate = new Date(response[item].date);
-        changeDate = this.changeFormatDate(changeDate);
-        for (let i in days) {
-          console.log(changeDate);
-          if (days[i] == changeDate) {
-            p = response[item].product_price;
-          } else if (days[i] != changeDate) {
-            p = null;
-          }
-          buffer.push(p);
-        }
+        // changeDate = new Date(response[item].date);
+        // changeDate = this.changeFormatDate(changeDate);
+        // for (let i in days) {
+        //   console.log(changeDate);
+
+        //   if (days[i] == changeDate) {
+        //     p = response[item].product_price;
+        //   } else if (days[i] != changeDate) {
+        //     //p = response[item.length-1].product_price;
+        //     p = null;
+        //   }
+        //   buffer.push(p);
+        // }
 
       }
-
-
-      //ใช้ๆ buffer.push(response[item].product_price);
-
-
-      //price[count].push(response[item].product_price)
-      //location.push(ln);
-      //location[item] = response[item].location_name;
-      //price[item] = parseFloat(response[item].product_price);
-
-      //date[item] = response[item].date;
 
     }
     price.push(buffer);
     buffer = [];
     console.log(buffer);
-    console.log(price)
+    console.log(price);
+    price = Array();
+    let pri = Array();
+    for (let l in location) {
+      pri = Array();
+      for (let d in days) {
+        let check = false;
+        for (let r in response) {
+          changeDate = new Date(response[r].date);
+          changeDate = this.changeFormatDate(changeDate);
+          if ((location[l] == response[r].location_name) && (days[d] == changeDate)) {
+            pri.push(response[r].product_price);
+            check = true;
+          }
+        }
+        if (check == false) {
+          if (pri.length == 0) {
+            pri.push(0);
+          } else if (pri.length > 0) {
+            pri.push(pri[pri.length - 1]);
+          }
+        }
+      }
+      price.push(pri);
+    }
+    console.log(price);
 
     for (let i in location) {
       this.randomColor = this.randomColorGenerator();
@@ -221,6 +229,14 @@ export class HistoryPage {
 
     const options = {
 
+      tooltips: {
+        mode: 'index',
+        intersect: true,
+      },
+      hover: {
+        mode: 'nearest',
+        intersect: true
+      },
       responsive: true,
       maintainAspectRatio: false,
       scales: {

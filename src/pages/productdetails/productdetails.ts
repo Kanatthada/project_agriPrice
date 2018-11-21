@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-//import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { NavController, NavParams, PopoverController, LoadingController, ViewController } from 'ionic-angular';
 import { ProductdataProvider } from '../../providers/productdata/productdata';
 import { PopoverComponent } from '../../components/popover/popover';
@@ -8,11 +7,10 @@ import { Geolocation } from '@ionic-native/geolocation';
 /**
  * Generated class for the ProductdetailsPage page.
  *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
+ *
+ * 
  */
 
-//@IonicPage()
 @Component({
   selector: 'page-productdetails',
   templateUrl: 'productdetails.html',
@@ -30,21 +28,10 @@ export class ProductdetailsPage {
     this.typeId = this.navParams.get('id');
     this.typeName = this.navParams.get('name');
     this.datas.get_subtype(this.typeId).subscribe((response) => {
-      //console.log("log :"+response);
       console.log("get api data success");
       this.arr_subtype = response;
     });
-    /*this.datas.get_lastUpdate().subscribe((response) => {
-      //console.log("log :"+response);
-      console.log("get api data success");
-      this.arr_data = response;
-      // this.data = response.filter(function (response) {
-      //   return response.product_price >= 12000;
-      // });
-      // console.log(this.data);
-    });*/
-    //console.log(data);
-    //this.loadNearbyLocation();
+   
     this.presentLoader();
 
   }
@@ -190,5 +177,5 @@ interface Data {
 interface Item {
   subtype_id: number;
   subtype_name: string;
-  subtype_type_id: number;
+  type_id: number;
 }
